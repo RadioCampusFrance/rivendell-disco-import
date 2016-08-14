@@ -1,6 +1,6 @@
-# Rivendell::Import
+# Rivendell::DiscoImport
 
-Next-Generation import interface for Rivendell
+Import music tracks like Rivendell::Import, fetch their metadata in Disco.
 
 ## Run examples
 

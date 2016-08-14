@@ -2,16 +2,16 @@
 require File.expand_path('../lib/rivendell/import/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Alban Peignier"]
-  gem.email         = ["alban@tryphon.eu"]
-  gem.description   = %q{Import sound in our Rivendell system}
-  gem.summary       = %q{Import engine for Rivendell}
-  gem.homepage      = "http://wiki.tryphon.eu/rivendell-import/"
+  gem.authors       = ["Alban Peignier","Martin Kirchgessner"]
+  gem.email         = ["martin.kirchgessner@campusgrenoble.com"]
+  gem.description   = %q{Import sound in Rivendell (as rivendell-import), fetching metadata in Disco}
+  gem.summary       = %q{Warning: conflicts with rivendell-import !}
+  gem.homepage      = "https://github.com/rivendell-disco-import/"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.name          = "rivendell-import"
+  gem.name          = "rivendell-disco-import"
   gem.require_paths = ["lib"]
   gem.version       = Rivendell::Import::VERSION
 
