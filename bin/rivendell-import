@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require "rivendell/import"
+require "rivendell/import/cli"
+
+Rivendell::Import::CLI.new(ARGV).run

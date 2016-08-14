@@ -1,0 +1,174 @@
+html {color:#000;}
+body,div,ul,li,p,th,td{margin:0;padding:0;}
+table {border-collapse:collapse;border-spacing:0;}
+img {border:0;}
+strong,b,i,em,th {font-style:normal;font-weight:normal;}
+li {list-style:none;}
+th {text-align:left;}
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  font-family: Trebuchet MS, Verdana, sans-serif;
+}
+html, body {
+  height: 100%;
+}
+a {
+  color: #5884a6;
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+hr {
+  display: none;
+  clear: both;
+}
+img {
+  border: none;
+  vertical-align: middle;
+}
+strong { font-weight: bold; }
+em { font-style: italic; }
+#access { display: none; }
+#header {
+  border-bottom: 4px solid #cccccc;
+  background: #333333;
+  margin-bottom: 20px;
+}
+#header div {
+  position: relative;
+  height: 100px;
+  width: 750px;
+  margin: 0 auto;
+  background: url("rivendell-import.png") no-repeat 0px 30px;
+}
+#menu {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+#menu li {
+  float: left;
+  margin: 0 0 0 8px;
+  background-color: #7196c4;
+}
+#menu li a {
+  display: block;
+  padding: 6px 10px;
+  font-size: 105%;
+  color: #ffffff;
+}
+#menu li a:hover {
+  color: #333333;
+  text-decoration: none;
+}
+#frame {
+  width: 750px;
+  margin: 0 auto;
+  height: 100%;
+}
+#frame:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+#content {
+  padding-top: 5px;
+  height: 100%;
+}
+#content .empty {
+  margin-top: 10px;
+  font-style: italic;
+}
+#content .pagination {
+  clear: both;
+  padding: 4px 0;
+  font-size: 90%;
+  text-align: right;
+}
+#content .pagination .disabled { display: none; }
+#flash div {
+  margin: 6px 0;
+  padding: 12px 0;
+  font-size: 115%;
+  font-weight: bold;
+  text-indent: 54px;
+  border-top: 1px solid #979797;
+  border-bottom: 1px solid #979797;
+  background: #e7e7e7 url("../images/ui/notice.png") no-repeat 28px;
+}
+#flash .success {
+  color: #1e7a1b;
+  border-color: #4bb426;
+  background: #b7e1af url("../images/ui/success.png") no-repeat 28px;
+}
+#flash .failure {
+  color: #c01100;
+  border-color: #ca4f35;
+  background: #ffbdbd url("../images/ui/failure.png") no-repeat 28px;
+}
+#flash .warning {
+  color: #c67109;
+  border-color: #c67109;
+  background: #f8e694 url("../images/ui/warning.png") no-repeat 28px;
+}
+#footer {
+  display: none;
+  clear: both;
+  color: #333333;
+  line-height: 18px;
+  margin: 0;
+  padding: 24px 0;
+  background: #e7db9f;
+}
+#footer div {
+  width: 760px;
+  margin: 0 auto;
+  text-align: left;
+}
+#content table {
+    width: 100%;
+}
+#content table th {
+  font-weight: bold;
+}
+#content table td, #content table th {
+  padding: 5px 2px;
+}
+#content table tr.odd {
+  background-color: #EAEAEA;
+}
+#content .pagination {
+  float: right;
+}
+#content form {
+  margin-bottom: 10px;
+}
+
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+
+  clear: both;
+  margin-top: 25px;
+}
+.CodeMirror-scroll {
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+form.config_edit div {
+    position: relative;
+}
+
+form.config_edit div p {
+    padding-top: 7px;
+}
+
+form.config_edit span.button {
+    position: absolute;
+    right: 0;
+    top: 0;
+}

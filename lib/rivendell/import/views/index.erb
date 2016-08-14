@@ -1,0 +1,27 @@
+<%= will_paginate tasks %>
+
+<form action=""/>
+  <input type="text" name="search" value="<%= params[:search] %>"/>
+  <input type="submit" value="Search"/>
+</form>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Status</th>
+    <th>Since</th>
+    <th>File</th>
+    <th>Destination</th>
+    <th>Priority</th>
+  <tr/>
+  <% tasks.each_with_index do |task, index| %>
+  <tr class="<%= 'odd' if index.odd? %>">
+    <td><%= task.id %></td>
+    <td><%= task.detailed_status %></td>
+    <td><%= distance_of_time_in_words_from_now(task.updated_at) %></td>
+    <td><%= truncate_filename(task.file, 60) %></td>
+    <td><%= task.destination %></td>
+    <td><%= task.priority or "default" %></td>
+  </tr>
+  <% end %>
+</table>

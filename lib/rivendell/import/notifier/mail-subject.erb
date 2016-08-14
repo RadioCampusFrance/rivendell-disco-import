@@ -1,0 +1,11 @@
+[Rivendell Import] 
+<% if many? %>
+  <%= tasks.count %> task(s) completed
+<% else %>
+  <% task = tasks.first %>
+  <% if task.status.completed? %>
+    <%= task.destination %> imported
+  <% else %>
+    <%= task.file.name %> failed
+  <% end %>
+<% end %>

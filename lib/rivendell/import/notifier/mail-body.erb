@@ -1,0 +1,8 @@
+<% tasks.each do |task| -%>
+<%= task.file %>
+<% if task.status.completed? -%>
+  imported in <%= task.destination %>
+<% else -%>
+  failed
+<% end -%>
+<% end %>

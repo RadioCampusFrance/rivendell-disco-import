@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <title>Rivendell Import</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    <script src="/codemirror.js"></script>
+    <link rel="stylesheet" href="/codemirror.css"></link>
+
+    <link href="/screen.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
+  <body class="tasks index">
+    <ul id="access">
+      <li><a href="#content">Aller au contenu</a></li>
+      <li><a href="#sidebar">Aller au menu</a></li>
+    </ul>
+    <hr/>
+    <div id="header">
+      <div>
+        <ul id="menu">
+          <li><a href="/config">Config</a></li>
+          <li><a href="http://wiki.tryphon.eu/rivendell-import/">Help</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr/>
+    <div id="frame">
+      <div id="content">
+        <%= yield %>
+      </div>
+    </div>
+    <hr/>
+    <div id="footer">
+      <div>
+        &nbsp;
+      </div>
+    </div>
+  </body>
+</html>

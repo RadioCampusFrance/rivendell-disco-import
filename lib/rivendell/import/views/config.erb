@@ -1,0 +1,28 @@
+<script>
+  window.onload = function() {
+    var editor = CodeMirror.fromTextArea(document.getElementById("config"), {
+      mode: "ruby",
+      autofocus: true,
+      // lineNumbers: true,
+      viewportMargin: Infinity,
+    });
+  }
+
+  saved = false;
+  window.onbeforeunload = function() {
+    if (!saved) {
+      return true;
+    }
+  }
+</script>
+
+<form class="config_edit" action="/config" method="post">
+  <div>
+    <p>Modify the current import configuration :</p>
+    <span class="button">
+      <input type="submit" value="Save" onclick="saved = true;" />
+      or <a href="/">cancel</a>
+    </span>
+  </div>
+  <textarea name="config" id="config"><%= config %></textarea>
+</form>
