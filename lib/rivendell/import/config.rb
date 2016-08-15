@@ -8,6 +8,19 @@ module Rivendell::Import
     def rivendell
       @rivendell ||= Rivendell.new
     end
+
+    def disco_url=(url)
+      Disco.url = url
+    end
+
+    def dropbox_path=(url)
+      Disco.dropbox_path = url
+    end
+
+    def archive_path=(url)
+      Disco.archive_path = url
+    end
+
     alias_method :xport_options, :rivendell
 
     class Rivendell

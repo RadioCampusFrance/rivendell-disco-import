@@ -16,6 +16,10 @@ module Rivendell::Import
       @config_file ||= options[:config]
     end
 
+    def disco_mode?
+      options[:disco]
+    end
+
     def listen_mode?
       options[:listen]
     end
@@ -46,7 +50,8 @@ module Rivendell::Import
 
     def parser
       @parser ||= Trollop::Parser.new do
-        opt :config, "Configuration file", :type => String #, :required => true
+        opt :config, "Configuration file", :type => String , :required => true
+        opt :disco, "Enable a Disco-bound dropbox"
         opt :listen, "Wait for files in given directory"
         opt :dry_run, "Just create tasks without executing them"
         opt :debug, "Enable debug messages (in stderr)"
@@ -98,6 +103,7 @@ module Rivendell::Import
 
       Thread.new do
         Rivendell::Import::Application.set :config_loader, config_loader
+        Rivendell::Import::Application.set :import, import
         Rivendell::Import::Application.run!
 
         # FIXME we don't see difference between normal quit and start error (EADDRINUSE, ...)
@@ -133,7 +139,11 @@ module Rivendell::Import
       config_loader.listen_file
       sleep 1
 
-      if listen_mode?
+      if disco_mode?
+        start_webserver
+        sleep 1
+
+      elsif listen_mode?
         start_webserver
         sleep 1
 

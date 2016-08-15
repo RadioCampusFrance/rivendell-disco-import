@@ -1,54 +1,29 @@
-#   Mail.defaults do
-#     delivery_method :smtp, { :address              => "smtp.me.com",
-#                              :port                 => 587,
-#                              :domain               => 'your.host.name',
-#                              :user_name            => '<username>',
-#                              :password             => '<password>',
-#                              :authentication       => 'plain',
-#                              :enable_starttls_auto => true  }
-#   end
-
-Mail.defaults do
-  delivery_method :smtp, { :address => "smtp.free.fr" }
-end
-
 # Rivendell::API::Xport.debug_output $stdout
 
-Rivendell::Import::Notifier::Mail.from = "root@tryphon.eu"
-
 Rivendell::Import.config do |config|
-  config.rivendell.host = "localhost"
+  config.rivendell.host = "host"
   config.rivendell.login_name = "user"
-  config.rivendell.password = ""
+  config.rivendell.password = "pass"
 
   config.rivendell.db_url = 'mysql://rduser:letmein@localhost/Rivendell'
 
+  # A running Disco install
+  config.disco_url = 'http://domain.com/disco'
+
+  # Where should we look at new albums to import ?
+  config.dropbox_path = '/path/to/incoming/albums'
+
+  # Optional - imported albums' folder will be moved there
+  config.archive_path = '/path/to/archived/albums'
+
+  # Common operations to be applied on any imported track
+  # works as config.py in rivendell-import (you can also access file, cue, etc)
   config.to_prepare do |file|
     # task.cancel!
 
-    cart.default_title = file.basename
+    cart.group = "MUSIC"
 
-    file.in("music") do
-      cart.group = "MUSIC"
-    end
+    cart.scheduler_codes ||= "MuPlayList"
 
-    file.in("pad") do
-      name = file.basename
-      if name.match /-lundi$/
-        cart.cut.days = %w{mon}
-        name.gsub! /-lundi$/, ""
-      end
-
-      cart.clear_cuts!
-      cart.find_by_title name
-      cart.cut.description = file.basename
-    end
-
-    cart.group ||= "TEST"
-
-    # To delete file when task is completed
-    #task.delete_file!
-
-    # notify 'alban@tryphon.eu', :by => :email
   end
 end

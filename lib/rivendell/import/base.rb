@@ -73,6 +73,7 @@ module Rivendell::Import
     def create_task(file)
       Rivendell::Import.logger.debug "Create task for #{file}"
       tasks.create(file) do |task|
+        # TODO invoke Disco stuff here
         prepare_task task
       end
     end

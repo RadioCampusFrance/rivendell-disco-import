@@ -45,6 +45,10 @@ module Rivendell::Import
       Task.order("updated_at DESC")
     end
 
+    def import
+      settings.import # a Rivendell::Import::Base use its 'file' method
+    end
+
     helpers do
       def distance_of_time_in_words_from_now(time)
         distance = Time.now - time
