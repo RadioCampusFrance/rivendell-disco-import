@@ -9,6 +9,8 @@ Configure Disco URL and paths in the configuration file, see examples/config.rb 
 
     bundle exec ./bin/rivendell-import --config examples/config.rb --listen examples --debug
 
+During development, run with `RUBYOPT="-I lib/" bin/rivendell-import`
+
 ## Initialize a dedicated MySQL database
 
     $ mysqladmin create import
