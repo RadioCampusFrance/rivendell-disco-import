@@ -9,5 +9,6 @@ module Rivendell::Import
 
     @@archive_path = nil
     cattr_accessor :archive_path
-    
+
   end
+end
