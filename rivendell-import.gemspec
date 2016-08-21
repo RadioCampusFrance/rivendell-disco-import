@@ -31,6 +31,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'taglib-ruby'
 
   gem.add_runtime_dependency 'sinatra'
+  gem.add_runtime_dependency 'sinatra-contrib'
   gem.add_runtime_dependency 'will_paginate', '~> 3.0.0'
 
   gem.add_runtime_dependency 'daemons'
