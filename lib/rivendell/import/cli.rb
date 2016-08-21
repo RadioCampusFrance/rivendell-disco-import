@@ -141,7 +141,7 @@ module Rivendell::Import
 
       if disco_mode?
         start_webserver
-        sleep 1
+        sleep
 
       elsif listen_mode?
         start_webserver
