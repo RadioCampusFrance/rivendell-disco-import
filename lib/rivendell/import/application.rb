@@ -1,4 +1,5 @@
 require 'sinatra'
+require "sinatra/reloader" if development?
 
 require 'will_paginate'
 require 'will_paginate/active_record'
@@ -46,7 +47,21 @@ module Rivendell::Import
     end
 
     def import
-      settings.import # a Rivendell::Import::Base use its 'file' method
+      settings.import # a Rivendell::Import::Base use its 'file' method, then its tasks.run
+
+      ########" TODO: move this to Disco object, make it a singleton, change config accordingly
+    end
+
+    get '/disco_staging' do
+      erb :disco_awaiting, :locals => { :discs => {123 => "test", 234 => "lol"}}
+    end
+
+    get '/disco_confirm_import/:id' do
+      erb :disco_confirm_import, :locals => {:id => params['id']}
+    end
+
+    get '/disco_import/:id' do
+      redirect "/disco_staging", 302
     end
 
     helpers do

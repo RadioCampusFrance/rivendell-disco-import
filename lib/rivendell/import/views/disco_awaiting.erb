@@ -1,0 +1,7 @@
+<h1>A importer depuis Disco</h1>
+
+<ul>
+  <% discs.each do |id, title| %>
+    <li><a href="/disco_confirm_import/<%= id %>"><%= title %></a></li>
+  <% end %>
+</ul>
