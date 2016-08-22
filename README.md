@@ -1,6 +1,6 @@
-# Rivendell::DiscoImport
+# Rivendell::Import - Disco edition
 
-Import music tracks like Rivendell::Import, fetch their metadata in Disco.
+Import music tracks like [Rivendell::Import](http://wiki.tryphon.eu/rivendell-import/start), but fetches their metadata in Disco.
 
 The --disco option will supersede --listen, although both features could coexist.
 Configure Disco URL and paths in the configuration file, see examples/config.rb .
