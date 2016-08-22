@@ -146,7 +146,12 @@ em { font-style: italic; }
 #content form {
   margin-bottom: 10px;
 }
-
+#content ul {
+  margin: 1em 0;
+}
+#content li {
+  list-style: inside;
+}
 .CodeMirror {
   border: 1px solid #eee;
   height: auto;

@@ -1,5 +1,24 @@
 <h1>A importer depuis Disco</h1>
 
+<p>
+  Voici la liste des albums trouvés dans la "dropbox Disco".
+  Dans ce répertoire il faut suivre la même organisation que dans l'archive numérisée :
+</p>
+<ul>
+  <li>
+    Un répertoire par "disque" dans Disco.
+    Pour le disque n°12345 le nom du répertoire doit commencer par [1234].
+  </li>
+  <li>
+    Dans ce répertoire : un fichier par piste, dont le nom doit commencer par le numéro de la piste.
+  </li>
+</ul>
+
+<p>
+  Les numéros suffisent !
+  Toutes les infos (artiste, titres, styles) seront repris d'après ce qui a été saisi dans Disco.
+</p>
+
 <ul>
   <% discs.each do |id, title| %>
     <li><a href="/disco_confirm_import/<%= id %>"><%= title %></a></li>
