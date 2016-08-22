@@ -19,6 +19,7 @@ module Rivendell::Import
     end
 
     def initialize
+      require 'fileutils'
       if @@url and @@dropbox_path
         @tasks = Tasks.new
       end
@@ -54,7 +55,7 @@ module Rivendell::Import
       return nil if !base
       files = {}
 
-      Dir[::File.join([base, "**/*"])].each do |path|
+      Dir.entries(base).each do |path|
         title = ::File.basename(path)
         m = title.match('([0-9]+).*')
         if m
@@ -88,9 +89,9 @@ module Rivendell::Import
             :title => "Track 2",
             :artist => "Artiste B"
           },
-          22 => {
+          3 => {
             :rivendell => true,
-            :title => "Track 22",
+            :title => "Lol 22",
             :artist => "Artiste C"
           }
         },
@@ -99,7 +100,6 @@ module Rivendell::Import
     end
 
     def missing_tracks(staging, info)
-      ############################### TODO   FIXME !!!!!
       info[:tracks].each do |num, track|
         if track[:rivendell] && !staging[:files].key?(num)
           return true
@@ -116,5 +116,26 @@ module Rivendell::Import
       end
       return true
     end
+
+    def import(id)
+      files = find_staged_disc(id)
+      info = get_infos(id)
+
+      info[:tracks].each do |num, track|
+        if track[:rivendell]
+          ## TODO : Rivendell import tasks  with files[:files][num]
+        end
+      end
+
+      ## TODO tasks.run
+
+      if @@archive_path
+        FileUtils.mv(files[:path], ::File.join(@@archive_path, files[:basename]))
+      else
+        FileUtils.remove_dir(files[:path])
+      end
+    end
+
+
   end
 end

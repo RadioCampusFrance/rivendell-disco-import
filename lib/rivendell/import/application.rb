@@ -61,12 +61,12 @@ module Rivendell::Import
         redirect "/disco_staging", 302
       end
 
-      if Disco.instance.missing_tracks(staging, info)
-        flash.now[:warning] = "Attention des titres prévus pour Rivendell dans Disco ne sont pas dans le répertoire."
-      end
-
       if Disco.instance.uses_default_names(info)
         flash.now[:warning] = "Attention les titres de pistes entrés dans Disco sont les titres par défaut."
+      end
+
+      if Disco.instance.missing_tracks(staging, info)
+        flash.now[:failure] = "Attention des titres prévus pour Rivendell dans Disco ne sont pas dans le répertoire."
       end
 
       erb :disco_confirm_import, :locals => {
@@ -77,7 +77,7 @@ module Rivendell::Import
     end
 
     get '/disco_import/:id' do
-
+      Disco.instance.import(params['id'])
       flash[:success] = "Le disque "+params['id']+" a été importé."
       redirect "/disco_staging", 302
     end
