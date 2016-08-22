@@ -103,7 +103,6 @@ module Rivendell::Import
 
       Thread.new do
         Rivendell::Import::Application.set :config_loader, config_loader
-        Rivendell::Import::Application.set :import, import
         Rivendell::Import::Application.run!
 
         # FIXME we don't see difference between normal quit and start error (EADDRINUSE, ...)

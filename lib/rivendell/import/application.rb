@@ -46,12 +46,6 @@ module Rivendell::Import
       Task.order("updated_at DESC")
     end
 
-    def import
-      settings.import # a Rivendell::Import::Base use its 'file' method, then its tasks.run
-
-      ########" TODO: move this to Disco object, make it a singleton, change config accordingly
-    end
-
     get '/disco_staging' do
       erb :disco_awaiting, :locals => { :discs => {123 => "test", 234 => "lol"}}
     end

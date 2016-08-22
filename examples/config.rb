@@ -17,8 +17,8 @@ Rivendell::Import.config do |config|
   config.archive_path = '/path/to/archived/albums'
 
   # Common operations to be applied on any imported track
-  # works as config.py in rivendell-import (you can also access file, cue, etc)
-  config.to_prepare do |file|
+  # works as "to_prepare" in config.py in rivendell-import: you can also access file, cue, etc
+  config.disco_common do |file|
     # task.cancel!
 
     cart.group = "MUSIC"

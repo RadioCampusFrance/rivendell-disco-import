@@ -21,6 +21,10 @@ module Rivendell::Import
       Disco.archive_path = url
     end
 
+    def disco_common(&block)
+      Disco.default_to_prepare = block
+    end
+
     alias_method :xport_options, :rivendell
 
     class Rivendell
