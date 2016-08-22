@@ -7,19 +7,22 @@
   puis rafraîchissez cette page.
 </p>
 
-<p>
-  Si aucune track/disque ne match dans Disco:
-  mettre un warning
-</p>
+<table>
+  <tr>
+    <th>#</th><th>Artiste</th><th>Titre</th><th>Fichier</th>
+  </tr>
+  <% info[:tracks].each do |num, track| %><% if track[:rivendell] %>
+    <tr>
+      <td><%= num %></td>
+      <td><%= track[:artist] %></td>
+      <td><%= track[:title] %></td>
+      <td><%= files[num] %></td>
+    </tr>
+  <% end %><% end %>
+</table>
 
-<p>
-  si les tracks s'appellent "Track $i", mettre un warning
-</p>
-
-
-
-<p>
+<p id="importbuttons">
   <a href="/disco_staging">Annuler</a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="/disco_import/<%= id %>">Importer</a>
+  <a href="/disco_import/<%= id %>" onclick="document.getElementById('importbuttons').style.display='none'">Importer</a>
 </p>

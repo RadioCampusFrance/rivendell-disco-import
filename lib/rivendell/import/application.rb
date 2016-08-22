@@ -1,11 +1,12 @@
 require 'sinatra'
-require "sinatra/reloader" if development?
+require 'sinatra/flash'
 
 require 'will_paginate'
 require 'will_paginate/active_record'
 
 module Rivendell::Import
   class Application < Sinatra::Application
+    enable :sessions
 
     set :public_folder, ::File.expand_path('static', ::File.dirname(__FILE__))
     # set :static_cache_control, [:public, :max_age => 3600]
@@ -47,14 +48,37 @@ module Rivendell::Import
     end
 
     get '/disco_staging' do
-      erb :disco_awaiting, :locals => { :discs => {123 => "test", 234 => "lol"}}
+      erb :disco_awaiting, :locals => { :discs => Disco.instance.find_staging_discs}
     end
 
     get '/disco_confirm_import/:id' do
-      erb :disco_confirm_import, :locals => {:id => params['id']}
+      staging = Disco.instance.find_staged_disc(params['id'])
+      raise Sinatra::NotFound if !staging
+
+      info = Disco.instance.get_infos(params['id'])
+      if info.empty?
+        flash[:failure] = "Le disque "+staging[:basename]+" n'a pas été trouvé dans Disco, vérifiez la dropbox et le numéro."
+        redirect "/disco_staging", 302
+      end
+
+      if Disco.instance.missing_tracks(staging, info)
+        flash.now[:warning] = "Attention des titres prévus pour Rivendell dans Disco ne sont pas dans le répertoire."
+      end
+
+      if Disco.instance.uses_default_names(info)
+        flash.now[:warning] = "Attention les titres de pistes entrés dans Disco sont les titres par défaut."
+      end
+
+      erb :disco_confirm_import, :locals => {
+        :files => staging[:files],
+        :id => params['id'],
+        :info => info,
+      }
     end
 
     get '/disco_import/:id' do
+
+      flash[:success] = "Le disque "+params['id']+" a été importé."
       redirect "/disco_staging", 302
     end
 

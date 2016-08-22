@@ -24,6 +24,97 @@ module Rivendell::Import
       end
     end
 
-    
+    def find_staging_discs
+      found = {}
+      Dir[::File.join([@@dropbox_path, "**/*"])].each do |path|
+        if ::File.directory?(path)
+          title = ::File.basename(path)
+          m = title.match('^\[([0-9]+)\].*')
+          if m
+            found[m[1]] = title
+          end
+        end
+      end
+      return found
+    end
+
+    def find_path_by_id(id)
+      Dir[::File.join([@@dropbox_path, "**/*"])].each do |path|
+        if ::File.directory?(path)
+          title = ::File.basename(path)
+          m = title.match('^\['+id+'\].*')
+          return path if m
+        end
+      end
+      return nil
+    end
+
+    def find_staged_disc(id)
+      base = find_path_by_id(id)
+      return nil if !base
+      files = {}
+
+      Dir[::File.join([base, "**/*"])].each do |path|
+        title = ::File.basename(path)
+        m = title.match('([0-9]+).*')
+        if m
+          files[m[1].to_i] = title
+        end
+      end
+
+      return {
+        :path => base,
+        :basename => ::File.basename(base),
+        :files => files
+      }
+    end
+
+    def get_infos(id)
+      # TODO: ask Disco instead!
+      return {} if id.to_i > 24000
+
+      path = find_path_by_id(id)
+      return {
+        :artist => path,
+        :title => path,
+        :tracks => {
+          1 => {
+            :rivendell => true,
+            :title => "Track 1",
+            :artist => "Artiste A"
+          },
+          2 => {
+            :rivendell => false,
+            :title => "Track 2",
+            :artist => "Artiste B"
+          },
+          22 => {
+            :rivendell => true,
+            :title => "Track 22",
+            :artist => "Artiste C"
+          }
+        },
+        :scheduler_codes => ["lol"]
+      }
+    end
+
+    def missing_tracks(staging, info)
+      ############################### TODO   FIXME !!!!!
+      info[:tracks].each do |num, track|
+        if track[:rivendell] && !staging[:files].key?(num)
+          return true
+        end
+      end
+      return false
+    end
+
+    def uses_default_names(info)
+      info[:tracks].each do |num, track|
+        if !track[:title].match(/^Track [0-9]+/)
+          return false
+        end
+      end
+      return true
+    end
   end
 end
