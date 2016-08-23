@@ -65,6 +65,10 @@ module Rivendell::Import
         flash.now[:warning] = "Attention les titres de pistes entrés dans Disco sont les titres par défaut."
       end
 
+      if info[:scheduler_codes].empty?
+        flash.now[:warning] = "Attention ce disque n'est pas enregistré avec un genre qui corresponde à un Scheduler Code."
+      end
+
       if Disco.instance.missing_tracks(staging, info)
         flash.now[:failure] = "Attention des titres prévus pour Rivendell dans Disco ne sont pas dans le répertoire."
       end
