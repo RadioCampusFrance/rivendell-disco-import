@@ -60,7 +60,7 @@ module Rivendell::Import
         flash[:failure] = "Le disque "+staging[:basename]+" n'a pas été trouvé dans Disco, vérifiez la dropbox et le numéro."
         redirect "/disco_staging", 302
       end
-      
+
       if Disco.instance.uses_default_names(info)
         flash.now[:warning] = "Attention les titres de pistes entrés dans Disco sont les titres par défaut."
       end
@@ -81,7 +81,13 @@ module Rivendell::Import
     end
 
     get '/disco_import/:id' do
-      Disco.instance.import(params['id'])
+      begin
+        Disco.instance.import(params['id'])
+      rescue Exception => e
+        flash[:failure] = "Echec de l'import : #{e}"
+        Rivendell::Import.logger.error e.backtrace.join("\n")
+        redirect "/disco_staging", 302
+      end
       flash[:success] = "Le disque "+params['id']+" a été importé."
       redirect "/disco_staging", 302
     end

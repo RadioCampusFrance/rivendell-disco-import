@@ -104,14 +104,29 @@ module Rivendell::Import
 
       info["tracks"].each do |num, track|
         if track["rivendell"]
-          file = ::File.join(files[:path], files[:files][num])
+          fullpath = ::File.join(files[:path], files[:files][num])
 
-          Rivendell::Import.logger.debug "Preparing "+file
+          Rivendell::Import.logger.debug "Preparing "+fullpath
           Rivendell::Import.logger.debug track["artist"] +" - "+track["title"]+info["scheduler_codes"].to_s
+
+          Rivendell::Import::Task.create({:file => (Rivendell::Import::File.new fullpath)}).tap do |task|
+            Rivendell::Import.logger.debug "Created task #{task.inspect}"
+            task.prepare do
+              cart.scheduler_codes = info["scheduler_codes"]
+              cart.album = info["title"]
+              cart.title = track["title"]
+              cart.artist = track["artist"]
+            end
+            task.prepare(&to_prepare) if to_prepare
+
+            task.run
+
+            if !task.ran?
+              throw new Exception(fullpath)
+            end
+          end
         end
       end
-
-      ## TODO tasks.run
 
       if @@archive_path
         FileUtils.mv(files[:path], ::File.join(@@archive_path, files[:basename]))
