@@ -131,7 +131,7 @@ module Rivendell::Import
       logger.info "Imported Cart #{cart.number}"
     rescue Exception => e
       logger.error "Task failed : #{e}"
-      logger.debug e.backtrace.join("\n")
+      logger.error e.backtrace.join("\n")
     ensure
       close_file
 
