@@ -60,12 +60,12 @@ module Rivendell::Import
         flash[:failure] = "Le disque "+staging[:basename]+" n'a pas été trouvé dans Disco, vérifiez la dropbox et le numéro."
         redirect "/disco_staging", 302
       end
-
+      
       if Disco.instance.uses_default_names(info)
         flash.now[:warning] = "Attention les titres de pistes entrés dans Disco sont les titres par défaut."
       end
 
-      if info[:scheduler_codes].empty?
+      if info["scheduler_codes"].empty?
         flash.now[:warning] = "Attention ce disque n'est pas enregistré avec un genre qui corresponde à un Scheduler Code."
       end
 

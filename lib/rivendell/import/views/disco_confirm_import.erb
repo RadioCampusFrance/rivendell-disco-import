@@ -1,4 +1,4 @@
-<h1>Import du disque <%= id %>, "Titre" par Artiste</h1>
+<h1>Import du disque <%= id %>, "<%= info["title"] %>" par <%= info["artist"] %></h1>
 
 <p>
   Les morceaux suivants seront importés dans Rivendell.
@@ -11,11 +11,11 @@
   <tr>
     <th>#</th><th>Artiste</th><th>Titre</th><th>Fichier</th>
   </tr>
-  <% info[:tracks].each do |num, track| %><% if track[:rivendell] %>
+  <% info["tracks"].each do |num, track| %><% if track["rivendell"] %>
     <tr>
       <td><%= num %></td>
-      <td><%= track[:artist] %></td>
-      <td><%= track[:title] %></td>
+      <td><%= track["artist"] %></td>
+      <td><%= track["title"] %></td>
       <td><%= files[num] %></td>
     </tr>
   <% end %><% end %>

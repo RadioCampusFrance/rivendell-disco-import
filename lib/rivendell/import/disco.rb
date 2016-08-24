@@ -1,6 +1,7 @@
 module Rivendell::Import
   class Disco
     include Singleton
+    include HTTMultiParty
 
     @@url = nil
     cattr_accessor :url
@@ -32,7 +33,7 @@ module Rivendell::Import
           title = ::File.basename(path)
           m = title.match('^\[([0-9]+)\].*')
           if m
-            found[m[1]] = title
+            found[m[1].to_i] = title
           end
         end
       end
@@ -57,9 +58,9 @@ module Rivendell::Import
 
       Dir.entries(base).each do |path|
         title = ::File.basename(path)
-        m = title.match('([0-9]+).*')
+        m = title.match('([1-9]+[0-9]*).*') # /!\ no starting 0
         if m
-          files[m[1].to_i] = title
+          files[m[1]] = title
         end
       end
 
@@ -71,37 +72,17 @@ module Rivendell::Import
     end
 
     def get_infos(id)
-      # TODO: ask Disco instead!
-      return {} if id.to_i > 24000
+      uri = url + (url.match('/$') ? '' : '/') + "cd/" + id + "/rivendellInfo"
 
-      path = find_path_by_id(id)
-      return {
-        :artist => path,
-        :title => path,
-        :tracks => {
-          1 => {
-            :rivendell => true,
-            :title => "Track 1",
-            :artist => "Artiste A"
-          },
-          2 => {
-            :rivendell => false,
-            :title => "Track 2",
-            :artist => "Artiste B"
-          },
-          3 => {
-            :rivendell => true,
-            :title => "Lol 22",
-            :artist => "Artiste C"
-          }
-        },
-        :scheduler_codes => ["lol"]
-      }
+      Rivendell::Import.logger.debug "GET "+uri
+      response = self.class.get uri
+      response.error! unless response.success?
+      response.parsed_response
     end
 
     def missing_tracks(staging, info)
-      info[:tracks].each do |num, track|
-        if track[:rivendell] && !staging[:files].key?(num)
+      info["tracks"].each do |num, track|
+        if track["rivendell"] && !staging[:files].key?(num)
           return true
         end
       end
@@ -109,8 +90,8 @@ module Rivendell::Import
     end
 
     def uses_default_names(info)
-      info[:tracks].each do |num, track|
-        if !track[:title].match(/^Track [0-9]+/)
+      info["tracks"].each do |num, track|
+        if !track["title"].match(/^Track [0-9]+/)
           return false
         end
       end
@@ -121,9 +102,12 @@ module Rivendell::Import
       files = find_staged_disc(id)
       info = get_infos(id)
 
-      info[:tracks].each do |num, track|
-        if track[:rivendell]
-          ## TODO : Rivendell import tasks  with files[:files][num]
+      info["tracks"].each do |num, track|
+        if track["rivendell"]
+          file = ::File.join(files[:path], files[:files][num])
+
+          Rivendell::Import.logger.debug "Preparing "+file
+          Rivendell::Import.logger.debug track["artist"] +" - "+track["title"]+info["scheduler_codes"].to_s
         end
       end
 
