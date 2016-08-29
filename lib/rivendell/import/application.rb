@@ -13,7 +13,7 @@ module Rivendell::Import
     set :bind, '0.0.0.0'
 
     get '/' do
-      redirect "/tasks", 302
+      redirect "/disco_staging", 302
     end
 
     get '/tasks' do
