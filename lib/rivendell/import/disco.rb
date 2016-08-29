@@ -121,8 +121,8 @@ module Rivendell::Import
 
             task.run
 
-            if !task.ran?
-              throw new Exception(fullpath)
+            if task.status == 'failed'
+              raise fullpath
             end
           end
         end
